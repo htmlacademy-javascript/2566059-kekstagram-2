@@ -2,7 +2,6 @@
 
 * Студент: [Ярослав Башков](https://up.htmlacademy.ru/javascript-individual/2/user/2566059).
 * Наставник: [Давид Чачанов](https://htmlacademy.ru/profile/id2355549).
-
 ---
 
 _Не удаляйте и не изменяйте самовольно файлы и папки:_
