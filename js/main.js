@@ -1,3 +1,2 @@
-import { generatePhotos } from './data.js';
-
-window.photos = generatePhotos();
+import './data.js';
+import './photos.js';
