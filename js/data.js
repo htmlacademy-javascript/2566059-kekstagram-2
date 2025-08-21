@@ -71,3 +71,5 @@ export function generatePhotos() {
   }
   return photos;
 }
+
+export const createPhotos = generatePhotos;
