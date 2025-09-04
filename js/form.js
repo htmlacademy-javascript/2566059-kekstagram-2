@@ -53,7 +53,7 @@ const pristine = new Pristine(form, {
 });
 
 const MAX_TAGS = 5;
-const TAG_PATTERN = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/; // # + 1..19 символов (итого 2..20)
+const TAG_PATTERN = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 
 function normalizeHashtags(value) {
   return value
