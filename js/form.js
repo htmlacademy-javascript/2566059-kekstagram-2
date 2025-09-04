@@ -5,21 +5,19 @@ const cancelButton = overlay.querySelector('#upload-cancel');
 const hashtagsInput = form.querySelector('.text__hashtags');
 const commentInput = form.querySelector('.text__description');
 
-// Проставляем атрибуты формы для отправки на сервер (по ТЗ)
+
 form.method = 'POST';
 form.enctype = 'multipart/form-data';
 form.action = 'https://echo.htmlacademy.ru';
 
-// Показ/скрытие формы редактирования
+
 function openOverlay() {
   overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
 }
 
 function resetFormValues() {
-  // Сбрасываем поля формы, включая input[type=file]
   form.reset();
-  // Явно очищаем значение file, чтобы повторный выбор того же файла сработал
   fileInput.value = '';
 }
 
@@ -38,7 +36,6 @@ function onEscKeydown(evt) {
 }
 
 fileInput.addEventListener('change', () => {
-  // Если выбран файл — показываем форму
   if (fileInput.files && fileInput.files.length > 0) {
     openOverlay();
     document.addEventListener('keydown', onEscKeydown);
@@ -49,14 +46,12 @@ cancelButton.addEventListener('click', () => {
   closeOverlay();
 });
 
-// Валидация с Pristine
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__error-text'
 });
 
-// Правила для хэштегов
 const MAX_TAGS = 5;
 const TAG_PATTERN = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/; // # + 1..19 символов (итого 2..20)
 
@@ -86,7 +81,7 @@ pristine.addValidator(hashtagsInput, validateTagsCount, 'Не более 5 хэ�
 pristine.addValidator(hashtagsInput, validateTagsFormat, 'Хэштег должен начинаться с # и содержать 2–20 символов: буквы и цифры');
 pristine.addValidator(hashtagsInput, validateTagsUnique, 'Хэштеги не должны повторяться');
 
-// Ограничение длины комментария
+
 const MAX_COMMENT = 140;
 function validateCommentLength(value) {
   return value.length <= MAX_COMMENT;
