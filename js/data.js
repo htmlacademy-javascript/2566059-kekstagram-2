@@ -58,7 +58,7 @@ function generateComments() {
   return comments;
 }
 
-export function generatePhotos() {
+function generatePhotos() {
   const photos = [];
   for (let i = 1; i <= 25; i++) {
     photos.push({
