@@ -5,12 +5,6 @@ const cancelButton = overlay.querySelector('#upload-cancel');
 const hashtagsInput = form.querySelector('.text__hashtags');
 const commentInput = form.querySelector('.text__description');
 
-
-form.method = 'POST';
-form.enctype = 'multipart/form-data';
-form.action = 'https://echo.htmlacademy.ru';
-
-
 function openOverlay() {
   overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
