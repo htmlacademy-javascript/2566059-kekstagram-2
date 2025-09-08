@@ -1,9 +1,15 @@
+import { sendForm } from './api.js';
+
 const form = document.querySelector('.img-upload__form');
 const fileInput = form.querySelector('#upload-file');
 const overlay = document.querySelector('.img-upload__overlay');
 const cancelButton = overlay.querySelector('#upload-cancel');
 const hashtagsInput = form.querySelector('.text__hashtags');
 const commentInput = form.querySelector('.text__description');
+
+form.method = 'POST';
+form.enctype = 'multipart/form-data';
+form.action = 'https://28.javascript.pages.academy/kekstagram';
 
 function openOverlay() {
   overlay.classList.remove('hidden');
@@ -75,16 +81,60 @@ pristine.addValidator(hashtagsInput, validateTagsCount, 'Не более 5 хэ�
 pristine.addValidator(hashtagsInput, validateTagsFormat, 'Хэштег должен начинаться с # и содержать 2–20 символов: буквы и цифры');
 pristine.addValidator(hashtagsInput, validateTagsUnique, 'Хэштеги не должны повторяться');
 
-
 const MAX_COMMENT = 140;
 function validateCommentLength(value) {
   return value.length <= MAX_COMMENT;
 }
 pristine.addValidator(commentInput, validateCommentLength, 'Комментарий не длиннее 140 символов');
 
-form.addEventListener('submit', (evt) => {
+function showMessage(templateId) {
+  const tpl = document.querySelector(templateId);
+  if (!tpl) {
+    return;
+  }
+  const el = tpl.content.firstElementChild.cloneNode(true);
+  document.body.append(el);
+  function onAnyClose() {
+    el.remove();
+    document.removeEventListener('keydown', onEsc);
+    el.removeEventListener('click', onClick);
+  }
+  function onEsc(evt) {
+    if (evt.key === 'Escape') {
+      onAnyClose();
+    }
+  }
+  function onClick(evt) {
+    const blockSelector = templateId.replace('#', '.');
+    if (evt.target.closest('button') || !evt.target.closest(blockSelector)) {
+      onAnyClose();
+    }
+  }
+  document.addEventListener('keydown', onEsc);
+  el.addEventListener('click', onClick);
+}
+
+form.addEventListener('submit', async (evt) => {
   const isValid = pristine.validate();
   if (!isValid) {
     evt.preventDefault();
+    return;
   }
+  evt.preventDefault();
+  const submitBtn = form.querySelector('.img-upload__submit');
+  submitBtn.disabled = true;
+  try {
+    const formData = new FormData(form);
+    await sendForm(formData);
+    closeOverlay();
+    showMessage('#success');
+  } catch (e) {
+    showMessage('#error');
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
+
+form.addEventListener('reset', () => {
+  resetFormValues();
 });
