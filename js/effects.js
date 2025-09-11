@@ -122,11 +122,7 @@ function onEffectChange(evt) {
   applyEffectFromSlider();
 
   const effectLevelField = overlay.querySelector('.effect-level');
-  if (effectKey === 'none') {
-    effectLevelField.classList.add('hidden');
-  } else {
-    effectLevelField.classList.remove('hidden');
-  }
+  effectLevelField.classList.toggle('hidden', effectKey === 'none');
 }
 
 function initEditor() {
