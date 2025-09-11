@@ -6,6 +6,8 @@ const overlay = document.querySelector('.img-upload__overlay');
 const cancelButton = overlay.querySelector('#upload-cancel');
 const hashtagsInput = form.querySelector('.text__hashtags');
 const commentInput = form.querySelector('.text__description');
+const previewImg = overlay.querySelector('.img-upload__preview img');
+const effectsPreviews = overlay.querySelectorAll('.effects__preview');
 
 form.method = 'POST';
 form.enctype = 'multipart/form-data';
@@ -16,9 +18,29 @@ function openOverlay() {
   document.body.classList.add('modal-open');
 }
 
+let currentObjectUrl = '';
+const DEFAULT_PREVIEW_SRC = 'img/upload-default-image.jpg';
+const ACCEPTED_TYPES = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+function applyPreview(src) {
+  previewImg.src = src;
+  effectsPreviews.forEach((el) => {
+    el.style.backgroundImage = `url(${src})`;
+  });
+}
+
+function resetPreview() {
+  if (currentObjectUrl) {
+    URL.revokeObjectURL(currentObjectUrl);
+    currentObjectUrl = '';
+  }
+  applyPreview(DEFAULT_PREVIEW_SRC);
+}
+
 function resetFormValues() {
   form.reset();
   fileInput.value = '';
+  resetPreview();
 }
 
 function closeOverlay() {
@@ -37,6 +59,19 @@ function onEscKeydown(evt) {
 
 fileInput.addEventListener('change', () => {
   if (fileInput.files && fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+    const ext = file.name.split('.').pop().toLowerCase();
+    if (ACCEPTED_TYPES.includes(ext)) {
+      if (currentObjectUrl) {
+        URL.revokeObjectURL(currentObjectUrl);
+        currentObjectUrl = '';
+      }
+      currentObjectUrl = URL.createObjectURL(file);
+      applyPreview(currentObjectUrl);
+    } else {
+      // Неподдерживаемый формат — сбрасываем превью к дефолтному
+      resetPreview();
+    }
     openOverlay();
     document.addEventListener('keydown', onEscKeydown);
   }
