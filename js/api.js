@@ -1,4 +1,4 @@
-const API_BASE = 'https://28.javascript.pages.academy/kekstagram';
+const API_BASE = 'https://31.javascript.htmlacademy.pro/kekstagram';
 const API_GET = `${API_BASE}/data`;
 
 export async function getPhotos() {

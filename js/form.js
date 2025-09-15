@@ -11,7 +11,7 @@ const effectsPreviews = overlay.querySelectorAll('.effects__preview');
 
 form.method = 'POST';
 form.enctype = 'multipart/form-data';
-form.action = 'https://28.javascript.pages.academy/kekstagram';
+form.action = 'https://31.javascript.htmlacademy.pro/kekstagram';
 
 function openOverlay() {
   overlay.classList.remove('hidden');
