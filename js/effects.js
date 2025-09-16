@@ -146,6 +146,26 @@ function initEditor() {
   }
 }
 
+export function resetEffects() {
+  currentEffectKey = 'none';
+  applyScale(100);
+  preview.style.filter = 'none';
+  effectLevelInput.value = '';
+  ensureSlider();
+  effectSlider.noUiSlider.updateOptions({
+    range: { min: Effect.none.range[0], max: Effect.none.range[1] },
+    start: Effect.none.start,
+    step: Effect.none.step,
+  });
+  effectSlider.noUiSlider.set(Effect.none.start);
+  const effectLevelField = overlay.querySelector('.effect-level');
+  effectLevelField.classList.add('hidden');
+  const noneRadio = effectsForm.querySelector('#effect-none');
+  if (noneRadio) {
+    noneRadio.checked = true;
+  }
+}
+
 
 initEditor();
 

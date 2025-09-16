@@ -1,4 +1,5 @@
 import { sendForm } from './api.js';
+import { resetEffects } from './effects.js';
 
 const form = document.querySelector('.img-upload__form');
 const fileInput = form.querySelector('#upload-file');
@@ -11,7 +12,7 @@ const effectsPreviews = overlay.querySelectorAll('.effects__preview');
 
 form.method = 'POST';
 form.enctype = 'multipart/form-data';
-form.action = 'https://31.javascript.htmlacademy.pro/kekstagram';
+form.action = 'https://28.javascript.pages.academy/kekstagram';
 
 function openOverlay() {
   overlay.classList.remove('hidden');
@@ -41,6 +42,7 @@ function resetFormValues() {
   form.reset();
   fileInput.value = '';
   resetPreview();
+  resetEffects();
 }
 
 function closeOverlay() {
@@ -69,7 +71,6 @@ fileInput.addEventListener('change', () => {
       currentObjectUrl = URL.createObjectURL(file);
       applyPreview(currentObjectUrl);
     } else {
-      // Неподдерживаемый формат — сбрасываем превью к дефолтному
       resetPreview();
     }
     openOverlay();
@@ -162,6 +163,7 @@ form.addEventListener('submit', async (evt) => {
     const formData = new FormData(form);
     await sendForm(formData);
     closeOverlay();
+    resetEffects();
     showMessage('#success');
   } catch (e) {
     showMessage('#error');
@@ -172,4 +174,5 @@ form.addEventListener('submit', async (evt) => {
 
 form.addEventListener('reset', () => {
   resetFormValues();
+  resetEffects();
 });
