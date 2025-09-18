@@ -1,5 +1,5 @@
-const API_BASE = 'https://31.javascript.htmlacademy.pro/kekstagram';
-const API_GET = `${API_BASE}/data`;
+const API_BASE = 'https://32.javascript.htmlacademy.pro/kekstagram/';
+const API_GET = `${API_BASE}data`;
 
 export async function getPhotos() {
   const response = await fetch(API_GET);

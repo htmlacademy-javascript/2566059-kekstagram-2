@@ -117,6 +117,8 @@ function onEffectChange(evt) {
   const effectKey = radio.value;
   currentEffectKey = effectKey;
 
+  radio.checked = true;
+
   ensureSlider();
   updateSliderForEffect(effectKey);
   applyEffectFromSlider();
@@ -165,7 +167,6 @@ export function resetEffects() {
     noneRadio.checked = true;
   }
 }
-
 
 initEditor();
 

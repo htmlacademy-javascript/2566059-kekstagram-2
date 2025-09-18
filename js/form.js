@@ -12,7 +12,13 @@ const effectsPreviews = overlay.querySelectorAll('.effects__preview');
 
 form.method = 'POST';
 form.enctype = 'multipart/form-data';
-form.action = 'https://28.javascript.pages.academy/kekstagram';
+form.action = 'https://32.javascript.htmlacademy.pro/kekstagram//';
+
+const pristine = new Pristine(form, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__error-text'
+});
 
 function openOverlay() {
   overlay.classList.remove('hidden');
@@ -43,6 +49,7 @@ function resetFormValues() {
   fileInput.value = '';
   resetPreview();
   resetEffects();
+  pristine.reset();
 }
 
 function closeOverlay() {
@@ -53,6 +60,13 @@ function closeOverlay() {
 
 function onEscKeydown(evt) {
   if (evt.key === 'Escape') {
+    const errorMessage = document.querySelector('.error');
+    if (errorMessage) {
+      return;
+    }
+    if (document.activeElement === hashtagsInput || document.activeElement === commentInput) {
+      return;
+    }
     evt.preventDefault();
     closeOverlay();
     document.removeEventListener('keydown', onEscKeydown);
@@ -80,12 +94,6 @@ fileInput.addEventListener('change', () => {
 
 cancelButton.addEventListener('click', () => {
   closeOverlay();
-});
-
-const pristine = new Pristine(form, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__error-text'
 });
 
 const MAX_TAGS = 5;
@@ -141,8 +149,7 @@ function showMessage(templateId) {
     }
   }
   function onClick(evt) {
-    const blockSelector = templateId.replace('#', '.');
-    if (evt.target.closest('button') || !evt.target.closest(blockSelector)) {
+    if (evt.target.closest('button') || evt.target === el) {
       onAnyClose();
     }
   }
@@ -176,3 +183,4 @@ form.addEventListener('reset', () => {
   resetFormValues();
   resetEffects();
 });
+
