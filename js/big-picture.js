@@ -63,7 +63,7 @@ function fillBigPicture({ url, likes, description, comments }) {
   bigPicture.querySelector('.likes-count').textContent = String(likes);
   bigPicture.querySelector('.social__caption').textContent = description;
 
-  // Подготовка комментариев
+
   commentsContainer.innerHTML = '';
   currentComments = comments || [];
   shownCount = 0;
