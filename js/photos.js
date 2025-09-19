@@ -41,12 +41,12 @@ function showDataError(message) {
 
 function getRandomUnique(items, count) {
   const copy = items.slice();
-  const result = [];
-  while (copy.length > 0 && result.length < count) {
+  const results = [];
+  while (copy.length > 0 && results.length < count) {
     const index = getRandomInt(0, copy.length - 1);
-    result.push(copy.splice(index, 1)[0]);
+    results.push(copy.splice(index, 1)[0]);
   }
-  return result;
+  return results;
 }
 
 function sortByCommentsDesc(items) {
